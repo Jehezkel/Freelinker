@@ -1,0 +1,52 @@
+<div class="flex w-full justify-center items-center">
+  <form class="w-2/3 shadow-lg rounded-sm p-5">
+    <div class="w-full justify-center">
+      <!-- Form header -->
+      <div class="flex mb-5 justify-center">
+        <p class="text-xl font-bold">New Offer Form</p>
+      </div>
+      <div class="flex mb-3 justify-center">
+        <div class="w-1/2">
+          <app-product-gallery></app-product-gallery>
+        </div>
+      </div>
+      <!-- EAN -->
+      <div class="flex mb-3 justify-center">
+        <span class="material-symbols-outlined w-7 mr-1"> barcode </span>
+        <input
+          type="text"
+          placeholder="Product EAN"
+          class="border-gray-200 outline-none w-1/2 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        />
+      </div>
+      <!-- title -->
+      <div class="flex mb-3 justify-center">
+        <span class="material-symbols-outlined w-7 mr-1"> title </span>
+        <input
+          type="text"
+          placeholder="Offer Title"
+          class="border-gray-200 outline-none w-1/2 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        />
+      </div>
+      <!-- body -->
+      <div class="flex mb-3 justify-center">
+        <span class="material-symbols-outlined w-7 mr-1"> code_blocks </span>
+        <textarea
+          name=""
+          id=""
+          placeholder="Offer Body"
+          rows="10"
+          class="border-gray-200 outline-none w-1/2 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        ></textarea>
+      </div>
+      <!-- submit -->
+      <div class="flex justify-center">
+        <input
+          type="button"
+          class="bg-blue-500 rounded px-5 py-1 text-white font-semibold hover:bg-blue-700"
+          value="Add"
+        />
+      </div>
+    </div>
+  </form>
+</div>

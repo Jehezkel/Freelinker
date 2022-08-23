@@ -1,0 +1,72 @@
+<div class="h-full w-auto overflow-hidden">
+  <img
+    class="h-full rounded-full"
+    src="https://avatars.githubusercontent.com/u/20482805?v=4"
+    alt=""
+    (click)="menuVisible = !menuVisible"
+  />
+</div>
+<div
+  class="relative bg-white flex border rounded-sm w-48 right-36 top-1 justify-center shadow-lg font-semibold text-sm"
+  *ngIf="menuVisible"
+>
+  <ul class="w-full text-center cursor-pointer" *ngIf="isLoggedIn">
+    <li
+      class="border-b w-full p-1 hover:bg-slate-200 rounded-md flex align-middle justify-center"
+    >
+      Settings
+    </li>
+    <li
+      class="border-b w-full p-1 hover:bg-slate-200 rounded-md flex align-middle justify-center"
+      (click)="logOut()"
+    >
+      Log Out
+    </li>
+  </ul>
+  <!-- <ul class="w-full text-center cursor-pointer" *ngIf="!isLoggedIn">
+    <li
+      class="border-b w-full p-1 hover:bg-slate-200 rounded-md flex align-middle justify-center"
+      (click)="logIn()"
+    >
+      Log In
+    </li>
+    <li
+      class="border-b w-full p-1 hover:bg-slate-200 rounded-md flex align-middle justify-center"
+    >
+      Register
+    </li>
+  </ul> -->
+  <form class="p-2" *ngIf="!isLoggedIn">
+    <div class="w-full flex justify-center">
+      <label for="login" class="w-1/2 text-sm">Login</label>
+      <input
+        type="text"
+        class="border-gray-200 outline-none w-2/3 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        name="login"
+        #login
+        id="login"
+      />
+      <div class="w-full" *ngIf="login.value.match('\d')">
+        <p class="text-red-500 text-sm">Incorrect login</p>
+      </div>
+    </div>
+    <div class="w-full flex justify-center mt-1">
+      <label for="password" class="w-1/2 text-sm">Password</label>
+      <input
+        type="password"
+        class="border-gray-200 outline-none w-2/3 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        name="password"
+        #pass
+        id="pass"
+      />
+    </div>
+    <div class="w-full justify-center flex mt-2">
+      <input
+        type="button"
+        value="Login"
+        class="bg-blue-500 rounded px-3 py-1 text-white font-semibold hover:bg-blue-700"
+        (click)="logIn(login.value, pass.value)"
+      />
+    </div>
+  </form>
+</div>

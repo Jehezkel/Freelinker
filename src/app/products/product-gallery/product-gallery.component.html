@@ -1,0 +1,5 @@
+<app-image-upload-area
+  (newFileList)="pushNewFiles($event)"
+></app-image-upload-area>
+<!-- <p > {{fileList.}}</p>  -->
+<p *ngFor="let file of fileList">{{ file.name }}</p>
