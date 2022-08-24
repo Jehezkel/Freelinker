@@ -7,7 +7,7 @@
   />
 </div>
 <div
-  class="relative bg-white flex border rounded-sm w-48 right-36 top-1 justify-center shadow-lg font-semibold text-sm"
+  class="relative bg-white flex border rounded-sm w-52 right-36 top-1 justify-center shadow-lg font-semibold text-sm"
   *ngIf="menuVisible"
 >
   <ul class="w-full text-center cursor-pointer" *ngIf="isLoggedIn">
@@ -18,7 +18,7 @@
     </li>
     <li
       class="border-b w-full p-1 hover:bg-slate-200 rounded-md flex align-middle justify-center"
-      (click)="logOut()"
+      (click)="submitLogOut()"
     >
       Log Out
     </li>
@@ -36,36 +36,65 @@
       Register
     </li>
   </ul> -->
-  <form class="p-2" *ngIf="!isLoggedIn">
-    <div class="w-full flex justify-center">
-      <label for="login" class="w-1/2 text-sm">Login</label>
+  <form class="p-2 w-full" *ngIf="!isLoggedIn" [formGroup]="loginFormGroup">
+    <!-- login -->
+    <div class="w-full">
+      <label for="loginField" class="w-full inline-block text-sm">Login</label>
       <input
         type="text"
-        class="border-gray-200 outline-none w-2/3 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        class="border-gray-200 outline-none w-full border-solid border rounded font-semibold focus:border-lime-300 px-1 mt-1"
+        formControlName="login"
+        id="loginField"
         name="login"
-        #login
-        id="login"
+        [ngClass]="{
+          'border-red-500 focus:border-red-500':
+            submitted && LoginFormControl['login'].errors
+        }"
       />
-      <div class="w-full" *ngIf="login.value.match('\d')">
-        <p class="text-red-500 text-sm">Incorrect login</p>
+      <div
+        class="w-full flex justify-center mt-1"
+        *ngIf="
+          submitted &&
+          LoginFormControl['login'].errors &&
+          LoginFormControl['login'].errors['required']
+        "
+      >
+        <p class="text-red-500 text-xs">Login is required</p>
       </div>
     </div>
-    <div class="w-full flex justify-center mt-1">
-      <label for="password" class="w-1/2 text-sm">Password</label>
+    <!-- password -->
+    <div class="w-full mt-2">
+      <label for="passwordField" class="inline-block text-sm w-full"
+        >Password</label
+      >
       <input
         type="password"
-        class="border-gray-200 outline-none w-2/3 border-solid border rounded font-semibold focus:border-lime-300 px-1"
+        class="border-gray-200 outline-none w-full border-solid border rounded font-semibold focus:border-lime-300 px-1 mt-1"
+        formControlName="password"
+        id="passwordField"
         name="password"
-        #pass
-        id="pass"
+        [ngClass]="{
+          'border-red-500 focus:border-red-500':
+            submitted && LoginFormControl['password'].errors
+        }"
       />
+      <div
+        class="w-full flex justify-center mt-1"
+        *ngIf="
+          submitted &&
+          LoginFormControl['password'].errors &&
+          LoginFormControl['password'].errors['required']
+        "
+      >
+        <p class="text-red-500 text-xs">Password is required</p>
+      </div>
     </div>
-    <div class="w-full justify-center flex mt-2">
+    <div class="flex w-full justify-center mt-3">
       <input
         type="button"
         value="Login"
         class="bg-blue-500 rounded px-3 py-1 text-white font-semibold hover:bg-blue-700"
-        (click)="logIn(login.value, pass.value)"
+        (click)="submitLogIn()"
       />
     </div>
   </form>

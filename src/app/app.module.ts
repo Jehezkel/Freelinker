@@ -10,6 +10,8 @@ import { IntegrationsComponent } from './integrations/integrations.component';
 import { ProductGalleryComponent } from './products/product-gallery/product-gallery.component';
 import { ImageUploadAreaComponent } from './products/image-upload-area/image-upload-area.component';
 import { UserButtonComponent } from './navbar/user-button/user-button.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,11 @@ import { UserButtonComponent } from './navbar/user-button/user-button.component'
     IntegrationsComponent,
     ProductGalleryComponent,
     ImageUploadAreaComponent,
-    UserButtonComponent
+    UserButtonComponent,
+    MessagesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, ReactiveFormsModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
