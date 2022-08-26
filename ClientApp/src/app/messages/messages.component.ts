@@ -12,13 +12,11 @@ export class MessagesComponent implements OnInit {
   constructor(private msgService: MessageService) {
     msgService.messages.subscribe((m) => {
       this.messages = m;
-      console.log(m);
     });
   }
 
   ngOnInit(): void {}
   dismissMessage(msg: Message) {
-    console.log('dismissing', msg);
     this.msgService.closeMessage(msg);
   }
   msgIsLevelOf(message: Message, messageLevel: string): boolean {

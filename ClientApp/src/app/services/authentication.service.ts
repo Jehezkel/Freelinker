@@ -15,12 +15,12 @@ export class AuthenticationService {
     /// just for testing
     if (userName === 'admin' && pass == 'admin') {
       let receivedUser = new User({
-        userName: userName,
+        username: userName,
         id: 2,
         email: 'admin@admin.com',
       });
       this.currentUser.next(receivedUser);
-      this.msgService.newSuccess(`Hello ${receivedUser.username}}`);
+      this.msgService.newSuccess(`Hello ${receivedUser.username!}`);
     } else {
       this.msgService.newError(
         'Login failed! Login does not exist or incorrect password'

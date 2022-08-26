@@ -1,0 +1,22 @@
+<!-- set to top -->
+<div class="absolute top-0 left-1/2 w-2/3 max-w-6xl mx-2 z-10 transform -translate-x-1/2">
+  <!-- flex align -->
+  <div
+    *ngFor="let message of messages"
+    class="py-1 mt-1 rounded-md text-white border font-semibold text-center flex bg-opacity-60"
+    [ngClass]="{
+      ' bg-red-500  border-red-500': msgIsLevelOf(message, 'Error'),
+      'bg-orange-400 border-orange-400': msgIsLevelOf(message, 'Warning'),
+      'bg-blue-500 border-blue-500': msgIsLevelOf(message, 'Info'),
+      'bg-green-500 border-green-500': msgIsLevelOf(message, 'Success')
+    }"
+  >
+    <p class="mx-auto">{{ message.content }}</p>
+    <span
+      class="material-symbols-outlined self-end text-sm my-auto mr-2 cursor-pointer"
+      (click)="dismissMessage(message)"
+    >
+      close
+    </span>
+  </div>
+</div>

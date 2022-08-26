@@ -49,7 +49,7 @@ export class MessageService {
     this.messages.next(this.messagesArray);
   }
   newError(msg: string): void {
-    this.newMessage(msg, MsgLevel.Error, 10);
+    this.newMessage(msg, MsgLevel.Error, 100);
   }
   newWarning(msg: string): void {
     this.newMessage(msg, MsgLevel.Warning, 10);
