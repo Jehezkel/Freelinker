@@ -22,147 +22,6 @@ namespace WebApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
-                {
-                    b.Property<string>("UserCode")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("character varying(50000)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("DeviceCode")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("UserCode");
-
-                    b.HasIndex("DeviceCode")
-                        .IsUnique();
-
-                    b.HasIndex("Expiration");
-
-                    b.ToTable("DeviceCodes", (string)null);
-                });
-
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.Key", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Algorithm")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("DataProtected")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsX509Certificate")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Use")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Use");
-
-                    b.ToTable("Keys");
-                });
-
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime?>("ConsumedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("character varying(50000)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Key");
-
-                    b.HasIndex("ConsumedTime");
-
-                    b.HasIndex("Expiration");
-
-                    b.HasIndex("SubjectId", "ClientId", "Type");
-
-                    b.HasIndex("SubjectId", "SessionId", "Type");
-
-                    b.ToTable("PersistedGrants", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -187,6 +46,22 @@ namespace WebApi.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "94d0299a-68d3-4d19-8a40-514e1a18a816",
+                            ConcurrencyStamp = "231dcbcf-7596-4722-9034-2cf5bcd28276",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "f4d7447d-ec82-4616-ae6a-16d249e8a08f",
+                            ConcurrencyStamp = "956f7f6d-68d4-4971-b9b9-3d2d14b6d0ad",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -276,6 +151,18 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "8e97cb5c-9f2b-4012-9e00-64508798ec6b",
+                            RoleId = "94d0299a-68d3-4d19-8a40-514e1a18a816"
+                        },
+                        new
+                        {
+                            UserId = "2aa2f4c6-f097-47c7-a59f-ffad0c2209c6",
+                            RoleId = "f4d7447d-ec82-4616-ae6a-16d249e8a08f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -361,6 +248,40 @@ namespace WebApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e97cb5c-9f2b-4012-9e00-64508798ec6b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5f9064d9-a97c-45d8-8b0b-8b6300460c8f",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEaPdfZ1uGtyeWaCYJ5iJgPQSbf7rHelM4P9ieXwCBvgeNElvLN8+qwaCV8CUE3vWw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c0f35048-5105-45a8-8502-3ea00e59eb66",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "2aa2f4c6-f097-47c7-a59f-ffad0c2209c6",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ecb95f1e-3a50-4748-b0a3-1ba298dd09eb",
+                            Email = "user@user.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@USER.COM",
+                            NormalizedUserName = "USER",
+                            PasswordHash = "AQAAAAEAACcQAAAAELhXGkOU+GyUmZIJ40RWbe5Zm0P+fG07vZfCmFBJv6m3yzpfwaMp9Cna71Dc1YUaLQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6912e89a-7eee-421b-b97c-0d7f45b0d8f6",
+                            TwoFactorEnabled = false,
+                            UserName = "user"
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Models.Product", b =>

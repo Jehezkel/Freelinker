@@ -1,8 +1,7 @@
 # Use postgres/example user/password credentials
-version: '3.1'
+version: "3.1"
 
 services:
-
   db:
     image: postgres
     restart: always
@@ -10,8 +9,40 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
+    networks:
+      - freelinker-network
+  
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - freelinker-network
+  
+  webapi:
+    image: freelinker-api
+    ports:
+      -  5000:5000
+    environment:
+      - FreeLinker_JWT__Key="${JWT_KEY}"
+      - ASPNETCORE_URLS=http://+:5000
+
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    # volumes:
+      # -app
+    depends_on:
+      - webapi
+    networks:
+      - freelinker-network
+#Docker Networks
+networks:
+  freelinker-network:
+    driver: bridge

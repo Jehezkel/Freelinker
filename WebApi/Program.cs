@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.DAL;
 using WebApi.Models;
@@ -14,12 +16,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration;
+config.AddEnvironmentVariables(prefix: "FreeLinker_");
 string connString = config.GetConnectionString("FreeLinkerDB");
 var services = builder.Services;
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connString)
 );
-services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<AppDbContext>();
+services.AddDefaultIdentity<AppUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,7 +43,6 @@ services.AddAuthentication(opt =>
         ValidateIssuerSigningKey = true
     };
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

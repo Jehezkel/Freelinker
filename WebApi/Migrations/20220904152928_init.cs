@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,63 +47,6 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeviceCodes",
-                columns: table => new
-                {
-                    UserCode = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    DeviceCode = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    SubjectId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Expiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Data = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Keys",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Use = table.Column<string>(type: "text", nullable: true),
-                    Algorithm = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    IsX509Certificate = table.Column<bool>(type: "boolean", nullable: false),
-                    DataProtected = table.Column<bool>(type: "boolean", nullable: false),
-                    Data = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Keys", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersistedGrants",
-                columns: table => new
-                {
-                    Key = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    SubjectId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Expiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ConsumedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Data = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersistedGrants", x => x.Key);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,6 +191,33 @@ namespace WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "94d0299a-68d3-4d19-8a40-514e1a18a816", "231dcbcf-7596-4722-9034-2cf5bcd28276", "admin", "ADMIN" },
+                    { "f4d7447d-ec82-4616-ae6a-16d249e8a08f", "956f7f6d-68d4-4971-b9b9-3d2d14b6d0ad", "user", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "2aa2f4c6-f097-47c7-a59f-ffad0c2209c6", 0, "ecb95f1e-3a50-4748-b0a3-1ba298dd09eb", "user@user.com", false, false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAELhXGkOU+GyUmZIJ40RWbe5Zm0P+fG07vZfCmFBJv6m3yzpfwaMp9Cna71Dc1YUaLQ==", null, false, "6912e89a-7eee-421b-b97c-0d7f45b0d8f6", false, "user" },
+                    { "8e97cb5c-9f2b-4012-9e00-64508798ec6b", 0, "5f9064d9-a97c-45d8-8b0b-8b6300460c8f", "admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEEaPdfZ1uGtyeWaCYJ5iJgPQSbf7rHelM4P9ieXwCBvgeNElvLN8+qwaCV8CUE3vWw==", null, false, "c0f35048-5105-45a8-8502-3ea00e59eb66", false, "admin" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "f4d7447d-ec82-4616-ae6a-16d249e8a08f", "2aa2f4c6-f097-47c7-a59f-ffad0c2209c6" },
+                    { "94d0299a-68d3-4d19-8a40-514e1a18a816", "8e97cb5c-9f2b-4012-9e00-64508798ec6b" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -286,42 +256,6 @@ namespace WebApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceCodes_DeviceCode",
-                table: "DeviceCodes",
-                column: "DeviceCode",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeviceCodes_Expiration",
-                table: "DeviceCodes",
-                column: "Expiration");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Keys_Use",
-                table: "Keys",
-                column: "Use");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_ConsumedTime",
-                table: "PersistedGrants",
-                column: "ConsumedTime");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_Expiration",
-                table: "PersistedGrants",
-                column: "Expiration");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_ClientId_Type",
-                table: "PersistedGrants",
-                columns: new[] { "SubjectId", "ClientId", "Type" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
-                table: "PersistedGrants",
-                columns: new[] { "SubjectId", "SessionId", "Type" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_ProductId",
                 table: "ProductImages",
                 column: "ProductId");
@@ -343,15 +277,6 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "DeviceCodes");
-
-            migrationBuilder.DropTable(
-                name: "Keys");
-
-            migrationBuilder.DropTable(
-                name: "PersistedGrants");
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
