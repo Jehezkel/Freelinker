@@ -21,7 +21,7 @@ public class AccountController : ControllerBase
         this.signInManager = signInManager;
         this.configuration = configuration;
     }
-    [HttpPost("login")]
+    [HttpPost("Login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
@@ -43,18 +43,15 @@ public class AccountController : ControllerBase
             var userRoles = await userManager.GetRolesAsync(user);
             var jwtHelper = new JWTHelper(configuration);
             var token = jwtHelper.GetJwtSecurityToken(user, userRoles);
+            var tokenVal = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(
-                new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expires = token.ValidTo
-                }
+                new LoginResponse(tokenVal, token.ValidTo)
             );
         }
     }
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPost("register")]
+    [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest requestBody)
     {
         var user = await userManager.FindByEmailAsync(requestBody.EmailAddress);
