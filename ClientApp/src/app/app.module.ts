@@ -12,6 +12,8 @@ import { ImageUploadAreaComponent } from './products/image-upload-area/image-upl
 import { UserButtonComponent } from './navbar/user-button/user-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesComponent } from './messages/messages.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JWTInterceptor } from './helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,8 +27,19 @@ import { MessagesComponent } from './messages/messages.component';
     UserButtonComponent,
     MessagesComponent,
   ],
-  imports: [BrowserModule, ReactiveFormsModule, AppRoutingModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

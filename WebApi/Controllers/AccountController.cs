@@ -22,7 +22,7 @@ public class AccountController : ControllerBase
         this.configuration = configuration;
     }
     [HttpPost("Login")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
     public async Task<IActionResult> Login([FromBody] LoginRequest requestBody)
@@ -39,7 +39,6 @@ public class AccountController : ControllerBase
         }
         else
         {
-            //Generate JWT TOKEN /AuthService
             var userRoles = await userManager.GetRolesAsync(user);
             var jwtHelper = new JWTHelper(configuration);
             var token = jwtHelper.GetJwtSecurityToken(user, userRoles);

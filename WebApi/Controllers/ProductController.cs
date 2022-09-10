@@ -16,18 +16,19 @@ public class ProductController : ControllerBase
         this.appDbContext = appDbContext;
     }
     [HttpGet]
-    [Authorize(Roles = "admin")]
-
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
     public async Task<IActionResult> GetAllProducts()
     {
         return Ok(appDbContext.Products.ToList());
     }
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] Product requestBody)
     {
         await appDbContext.Products.AddAsync(requestBody);
         await appDbContext.SaveChangesAsync();
 
-        return Ok();
+        return Ok(requestBody.Id);
     }
 }

@@ -50,6 +50,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 services.AddDefaultIdentity<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
 services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -68,6 +69,16 @@ services.AddAuthentication(opt =>
         ValidateIssuerSigningKey = true
     };
 });
+string CorsAllowSpecific = "allowSpecificOrigins";
+string configuredOrigins = config["CORS:allowedOrigin"] ?? "";
+services.AddCors(opt =>
+{
+    opt.AddPolicy(name: CorsAllowSpecific, policy =>
+    {
+        policy.WithOrigins(configuredOrigins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,12 +88,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+// app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseCors(CorsAllowSpecific);
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
