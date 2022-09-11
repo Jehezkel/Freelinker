@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product.model';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -8,21 +10,14 @@ import { ProductsService } from '../services/products.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  ProductForm: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductsService
-  ) {}
-
-  ngOnInit(): void {
-    this.ProductForm = this.fb.group({
-      ean: ['', Validators.required],
-      sku: ['', Validators.required],
-      name: ['', Validators.required],
-    });
+  products$: Observable<Product[]>;
+  constructor(private productService: ProductsService) {
+    this.products$ = productService.products$;
   }
-  onSubmit() {
-    console.log('submitted hurray', this.ProductForm.value);
-    this.productService.addProduct(this.ProductForm.value);
+  ngOnInit(): void {
+    this.productService.getProductList();
+  }
+  deleteProduct(productId: number) {
+    this.productService.removeProduct(productId);
   }
 }
