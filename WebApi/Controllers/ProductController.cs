@@ -23,14 +23,14 @@ public class ProductController : ControllerBase
         return Ok(await appDbContext.Products.ToListAsync());
     }
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromBody] Product requestBody)
+    public async Task<IActionResult> CreateProduct([FromBody] Product newProduct)
     {
-        await appDbContext.Products.AddAsync(requestBody);
+        await appDbContext.Products.AddAsync(newProduct);
         await appDbContext.SaveChangesAsync();
 
-        return Ok(requestBody.Id);
+        return Ok(newProduct);
     }
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     [HttpGet("{ProductId}")]
@@ -51,6 +51,7 @@ public class ProductController : ControllerBase
         await appDbContext.SaveChangesAsync();
         return Ok();
     }
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
     [HttpPut("{ProductId}")]
     public async Task<IActionResult> UpdateProduct(int ProductId, [FromBody] Product product)
     {
@@ -62,6 +63,6 @@ public class ProductController : ControllerBase
         prod.Name = product.Name;
         appDbContext.Products.Update(prod);
         await appDbContext.SaveChangesAsync();
-        return Ok();
+        return Ok(prod);
     }
 }

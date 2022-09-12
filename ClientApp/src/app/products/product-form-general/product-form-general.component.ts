@@ -18,15 +18,16 @@ export class ProductFormGeneralComponent implements OnInit {
     private productService: ProductsService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.rebindModel;
-  }
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.route);
+    this.ProductForm = this.fb.group({
+      ean: [this.Product.ean, Validators.required],
+      sku: [this.Product.sku, Validators.required],
+      name: [this.Product.name, Validators.required],
+    });
     const url = this.route.snapshot.url;
     this.Mode = url[1].path;
-    this.rebindModel;
     if (this.Mode == 'edit') {
       const id = url[2].path;
       this.productService
@@ -34,33 +35,30 @@ export class ProductFormGeneralComponent implements OnInit {
         .subscribe((data: Product) => {
           console.log(data);
           this.Product = data;
-          this.rebindModel();
+          this.refreshFormValues();
         });
     } else {
     }
   }
-  rebindModel() {
-    this.ProductForm = this.fb.group({
-      ean: [this.Product.ean, Validators.required],
-      sku: [this.Product.sku, Validators.required],
-      name: [this.Product.name, Validators.required],
-    });
+  refreshFormValues() {
+    this.ProductForm.controls.sku.setValue(this.Product.sku);
+    this.ProductForm.controls.ean.setValue(this.Product.ean);
+    this.ProductForm.controls.name.setValue(this.Product.name);
   }
   onSubmit() {
     console.log('submitted hurray', this.ProductForm.value);
     if (this.Mode === 'new') {
       console.log('to new');
-      this.productService.addProduct(this.ProductForm.value);
-      this.router.navigate(['products']);
+      this.productService.addProduct(this.ProductForm.value).subscribe(() => {
+        this.router.navigate(['products']);
+      });
     }
     if (this.Mode === 'edit') {
       console.log('to edit');
 
-      this.productService.updateProduct(
-        this.ProductForm.value,
-        this.Product.id
-      );
-      this.router.navigate(['products']);
+      this.productService
+        .updateProduct(this.ProductForm.value, this.Product.id)
+        .subscribe(() => this.router.navigate(['products']));
     }
   }
 }
