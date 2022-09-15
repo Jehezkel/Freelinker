@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -13,6 +14,7 @@ export class UserButtonComponent implements OnInit {
   menuVisible = false;
   isLoggedIn = false;
   submitted = false;
+  loading = false;
   user: User | null = null;
   constructor(private authService: AuthenticationService, fb: FormBuilder) {
     this.authService.currentUser.subscribe((u) => {
@@ -34,11 +36,17 @@ export class UserButtonComponent implements OnInit {
     this.menuVisible = false;
   }
   submitLogIn() {
-    this.authService.logIn(
-      this.LoginFormControl['login'].value,
-      this.LoginFormControl['password'].value
-    );
-    // this.menuVisible = false;
+    this.loading = true;
     this.submitted = true;
+    this.authService
+      .logIn(
+        this.LoginFormControl['login'].value,
+        this.LoginFormControl['password'].value
+      )
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => {
+        this.menuVisible = false;
+      });
+    // this.menuVisible = false;
   }
 }

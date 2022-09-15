@@ -37,6 +37,12 @@
     </li>
   </ul> -->
   <form class="p-2 w-full" *ngIf="!isLoggedIn" [formGroup]="loginFormGroup">
+    <div
+      *ngIf="loading"
+      class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+    >
+      <span class="loader"></span>
+    </div>
     <!-- login -->
     <div class="w-full">
       <label for="loginField" class="w-full inline-block text-sm">Login</label>

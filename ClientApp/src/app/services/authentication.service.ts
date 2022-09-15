@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { MessageService } from './message.service';
@@ -24,10 +24,12 @@ export class AuthenticationService {
   }
   logIn(userName: string, password: string) {
     const url = `${this.API_BASE_URL}/account/login`;
-    this.http.post<User>(url, { userName, password }).subscribe((response) => {
-      sessionStorage.setItem('user', JSON.stringify(response));
-      this.currentUser.next(response);
-    });
+    return this.http.post<User>(url, { userName, password }).pipe(
+      tap((response) => {
+        sessionStorage.setItem('user', JSON.stringify(response));
+        this.currentUser.next(response);
+      })
+    );
   }
   logOut() {
     this.currentUser.next(null);
