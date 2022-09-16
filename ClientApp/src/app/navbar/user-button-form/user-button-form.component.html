@@ -1,0 +1,71 @@
+<form class="p-2 w-full" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+  <!-- loader -->
+  <div
+    *ngIf="isLoading"
+    class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+  >
+    <span class="loader"></span>
+  </div>
+  <!-- login -->
+  <div class="w-full">
+    <label for="loginField" class="w-full inline-block text-sm">Login</label>
+    <input
+      type="text"
+      class="outline-none w-full border-solid border rounded font-semibold px-1 mt-1"
+      formControlName="login"
+      id="loginField"
+      name="login"
+      [ngClass]="{
+        'border-red-500 focus:border-red-500':
+          LoginFormControl.login.dirty && LoginFormControl.login.errors
+      }"
+    />
+    <div
+      class="w-full flex justify-center mt-1"
+      *ngIf="
+        LoginFormControl.login.dirty &&
+        LoginFormControl.login.errors &&
+        LoginFormControl.login.errors['required']
+      "
+    >
+      <p class="text-red-500 text-xs">Login is required</p>
+    </div>
+  </div>
+  <!-- password -->
+  <div class="w-full mt-2">
+    <label for="passwordField" class="inline-block text-sm w-full"
+      >Password</label
+    >
+    <input
+      type="password"
+      class="outline-none w-full border-solid border rounded font-semibold px-1 mt-1"
+      formControlName="password"
+      id="passwordField"
+      name="password"
+      [ngClass]="{
+        'border-red-500 focus:border-red-500':
+          LoginFormControl.password.dirty && LoginFormControl.password.errors
+      }"
+    />
+    <div
+      class="w-full flex justify-center mt-1"
+      *ngIf="
+        LoginFormControl.password.dirty &&
+        LoginFormControl.password.errors &&
+        LoginFormControl.password.errors['required']
+      "
+    >
+      <p class="text-red-500 text-xs">Password is required</p>
+    </div>
+  </div>
+  <div class="flex w-full justify-center mt-3">
+    <button
+      class="bg-blue-500 rounded px-3 py-1 text-white font-semibold hover:bg-blue-700"
+      type="submit"
+      [disabled]="isLoading"
+      [ngClass]="{ 'bg-slate-500': isLoading }"
+    >
+      Login
+    </button>
+  </div>
+</form>

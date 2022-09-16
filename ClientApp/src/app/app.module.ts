@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JWTInterceptor } from './helpers/jwt.interceptor';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { ProductFormGeneralComponent } from './products/product-form-general/product-form-general.component';
+import { UserButtonFormComponent } from './navbar/user-button-form/user-button-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProductFormGeneralComponent } from './products/product-form-general/pro
     MessagesComponent,
     ProductFormComponent,
     ProductFormGeneralComponent,
+    UserButtonFormComponent,
   ],
   imports: [
     BrowserModule,
