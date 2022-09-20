@@ -7,20 +7,21 @@
     >
   </div>
   <div class="flex justify-center mt-3">
-    <table class="w-full border-solid border-black border-">
-      <thead>
+    <table class="w-full border-solid border-slate-200  border px-2">
+      <thead class="bg-blue-500 text-white h-9 ">
         <tr>
           <th>SKU</th>
           <th>EAN</th>
           <th>Name</th>
+          <th></th>
         </tr>
       </thead>
       <tbody class="text-left">
-        <tr *ngFor="let product of products$ | async">
-          <th>{{ product.sku }}</th>
+        <tr *ngFor="let product of products$ | async" class="odd:bg-slate-100 px-2">
+          <th class="pl-2">{{ product.sku }}</th>
           <th>{{ product.ean }}</th>
           <th>{{ product.name }}</th>
-          <th>
+          <th class="pr-2">
             <a (click)="deleteProduct(product.id)" class="cursor-pointer">
               <span class="material-symbols-outlined"> delete </span>
             </a>

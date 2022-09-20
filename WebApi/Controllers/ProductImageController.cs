@@ -33,7 +33,9 @@ public class ProductImageController : ControllerBase
                 logger.LogWarning("Dest path does not exists - creating :", destDir);
                 Directory.CreateDirectory(destDir);
             }
-
+            var servedAtBase = (new Uri(config["uploadImage:servedAt"])).ToString();
+            if (!servedAtBase.EndsWith('/'))
+                servedAtBase = servedAtBase + "/";
             string destFileName = Guid.NewGuid().ToString();
             var extension = (Path.GetExtension(file.FileName));
             if (!Regex.IsMatch(extension.ToLower(), ".(png|jpg|jpeg)"))
@@ -46,10 +48,11 @@ public class ProductImageController : ControllerBase
             }
             ProductImage result = new ProductImage
             {
-                StoredFileName = destFileName,
-                FileName = file.FileName
+                ImgUrl = servedAtBase + destFileName,
+                FileName = file.FileName,
+                StoredFileName = destFileName
             };
-            var destPath = Path.Join(destDir, result.StoredFileName);
+            var destPath = Path.Join(destDir, destFileName);
             using (FileStream fs = new FileStream(destPath, FileMode.CreateNew))
             {
                 await file.CopyToAsync(fs);

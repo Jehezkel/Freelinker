@@ -1,5 +1,48 @@
 <app-image-upload-area
   (newFileList)="pushNewFiles($event)"
+  [mainImage]="(images$ | async)[0]"
 ></app-image-upload-area>
 <!-- <p > {{fileList.}}</p>  -->
-<p *ngFor="let file of fileList">{{ file.name }}</p>
+<div
+  class="flex mt-2 flex-wrap justify-center"
+  *ngIf="(images$ | async)?.length > 0"
+>
+  <div
+    class="flex w-12 h-12 rounded-md border-blue-300 border justify-center items-center min-w-max bg-slate-200 mr-2 mb-2 cursor-pointer py-1"
+    *ngFor="let prodImg of images$ | async"
+  >
+    <div
+      class="absolute w-12 h-12 flex justify-start items-center bg-slate-300 bg-opacity-50"
+      *ngIf="prodImg.isLoading"
+    >
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+    <img
+      class="w-12 h-12 block object-contain"
+      sr
+      [src]="prodImg.isLoading ? prodImg.imgPreview : prodImg.imgUrl"
+      [alt]="prodImg.fileName"
+    />
+    <!-- <p>{{ prodImg.isLoading ? prodImg.imgPreview : prodImg.imgUrl }}</p> -->
+    <!-- <p>{{ prodImg | json }}</p> -->
+  </div>
+  <div
+    class="flex w-12 h-12 rounded-md border-blue-300 border justify-center items-center bg-slate-200 cursor-pointer mr-2"
+    (click)="FileSelectInputDialog.click()"
+  >
+    <span class="material-symbols-outlined text-blue-400"> add </span>
+  </div>
+</div>
+<input
+  type="file"
+  #FileSelectInputDialog
+  style="display: none"
+  (change)="handleFileInput($event)"
+  multiple
+/>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/product.model';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { ProductImage } from '../models/product-image.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -57,5 +58,12 @@ export class ProductsService {
   getProductDetails(productId: number) {
     const url = `${this.API_BASE_URL}/Product/${productId}`;
     return this.http.get(url);
+  }
+  uploadProductImage(file: File) {
+    const url = `${this.API_BASE_URL}/ProductImage/Upload`;
+    let formData = new FormData();
+    formData.append('file', file, file.name);
+    // const headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+    return this.http.post<ProductImage>(url, formData);
   }
 }

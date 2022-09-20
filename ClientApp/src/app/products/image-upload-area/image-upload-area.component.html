@@ -6,7 +6,7 @@
   class="border border-gray-400 columns-1 w-full h-80 justify-center items-center flex"
   [ngClass]="{ 'border-lime-300 border-2': showBorder }"
 >
-  <div class="">
+  <div *ngIf="!mainImage">
     <p>Drag and drop photos here</p>
     <div class="w-full flex justify-center text-center">
       <div>
@@ -22,6 +22,13 @@
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="mainImage" class="p-1 h-80">
+    <img
+      [src]="mainImage.isLoading ? mainImage.imgPreview : mainImage.imgUrl"
+      class="h-full object-contain"
+      [alt]="mainImage.fileName"
+    />
   </div>
 
   <input

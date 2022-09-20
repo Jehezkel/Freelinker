@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductImage } from 'src/app/models/product-image.model';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -12,6 +13,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductFormGeneralComponent implements OnInit {
   Product: Product = new Product();
   ProductForm: FormGroup;
+  prodImgs: ProductImage[] = [];
   Mode: string = 'new';
   constructor(
     private fb: FormBuilder,
@@ -19,7 +21,9 @@ export class ProductFormGeneralComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
-
+  setProductImages(productImgs: ProductImage[]) {
+    this.prodImgs = productImgs;
+  }
   ngOnInit(): void {
     this.ProductForm = this.fb.group({
       ean: [this.Product.ean, Validators.required],
@@ -46,10 +50,12 @@ export class ProductFormGeneralComponent implements OnInit {
     this.ProductForm.controls.name.setValue(this.Product.name);
   }
   onSubmit() {
-    console.log('submitted hurray', this.ProductForm.value);
+    this.Product = this.ProductForm.value;
+    this.Product.ProductImages = this.prodImgs;
+    console.log('submitted hurray', this.Product);
     if (this.Mode === 'new') {
       console.log('to new');
-      this.productService.addProduct(this.ProductForm.value).subscribe(() => {
+      this.productService.addProduct(this.Product).subscribe(() => {
         this.router.navigate(['products']);
       });
     }
@@ -57,7 +63,7 @@ export class ProductFormGeneralComponent implements OnInit {
       console.log('to edit');
 
       this.productService
-        .updateProduct(this.ProductForm.value, this.Product.id)
+        .updateProduct(this.Product, this.Product.id)
         .subscribe(() => this.router.navigate(['products']));
     }
   }

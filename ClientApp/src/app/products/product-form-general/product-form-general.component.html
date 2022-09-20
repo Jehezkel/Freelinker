@@ -11,7 +11,9 @@
       </div>
       <div class="flex mb-3 justify-center">
         <div class="w-1/2">
-          <app-product-gallery></app-product-gallery>
+          <app-product-gallery
+            (prodImgEmitter)="setProductImages($event)"
+          ></app-product-gallery>
         </div>
       </div>
       <!-- EAN -->

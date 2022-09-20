@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ProductImage } from 'src/app/models/product-image.model';
 
 // export interface FileHandle{
 //   file: File,
@@ -12,7 +13,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ImageUploadAreaComponent implements OnInit {
   @Output() newFileList = new EventEmitter<FileList>();
-  @Input() mainImagePath: string = '';
+  @Input() mainImage: ProductImage;
   showBorder = false;
   constructor() {}
 

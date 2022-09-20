@@ -27,7 +27,9 @@ public class ProductController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] Product newProduct)
     {
+
         await appDbContext.Products.AddAsync(newProduct);
+        //update images to contain assignment to productID
         await appDbContext.SaveChangesAsync();
 
         return Ok(newProduct);
