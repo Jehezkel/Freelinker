@@ -51,12 +51,12 @@ export class ProductFormGeneralComponent implements OnInit {
   }
   onSubmit() {
     this.Product = this.ProductForm.value;
-    this.Product.ProductImages = this.prodImgs;
+    this.Product.productImages = this.prodImgs;
     console.log('submitted hurray', this.Product);
     if (this.Mode === 'new') {
       console.log('to new');
       this.productService.addProduct(this.Product).subscribe(() => {
-        this.router.navigate(['products']);
+        this.router.navigate(['products']); 
       });
     }
     if (this.Mode === 'edit') {

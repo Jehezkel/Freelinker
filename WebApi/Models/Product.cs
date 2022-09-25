@@ -5,5 +5,5 @@ public class Product
     public string? SKU { get; set; }
     public long EAN { get; set; }
     public string? Name { get; set; }
-    public IList<ProductImage> ProductImages { get; private set; } = new List<ProductImage>();
+    public List<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 }

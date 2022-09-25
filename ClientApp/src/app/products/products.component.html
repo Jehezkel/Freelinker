@@ -7,28 +7,43 @@
     >
   </div>
   <div class="flex justify-center mt-3">
-    <table class="w-full border-solid border-slate-200  border px-2">
-      <thead class="bg-blue-500 text-white h-9 ">
-        <tr>
+    <table class="w-full shadow-md rounded-xl p-2">
+      <thead class="text-white font-bold h-9 rounded-xl border-separate bg-blue-600">
+        <tr class="">
+          <th class="rounded-tl-xl">Image</th>
           <th>SKU</th>
           <th>EAN</th>
           <th>Name</th>
-          <th></th>
+          <th class="rounded-tr-xl">Actions</th>
         </tr>
       </thead>
       <tbody class="text-left">
-        <tr *ngFor="let product of products$ | async" class="odd:bg-slate-100 px-2">
-          <th class="pl-2">{{ product.sku }}</th>
-          <th>{{ product.ean }}</th>
-          <th>{{ product.name }}</th>
-          <th class="pr-2">
-            <a (click)="deleteProduct(product.id)" class="cursor-pointer">
-              <span class="material-symbols-outlined"> delete </span>
-            </a>
-            <a routerLink="edit/{{ product.id }}">
-              <span class="material-symbols-outlined"> edit </span>
-            </a>
-          </th>
+        <tr
+          *ngFor="let product of products$ | async"
+          class="odd:bg-slate-100 px-2 font-semibold"
+        >
+          <td>
+            <div class="w-full flex justify-center">
+              <img
+                class="h-16 w-24 object-contain"
+                [src]="product.mainImgUrl"
+                [alt]="product.name"
+              />
+            </div>
+          </td>
+          <td class="pl-2">{{ product.sku }}</td>
+          <td>{{ product.ean }}</td>
+          <td>{{ product.name }}</td>
+          <td class="pr-2 justify-center items-center">
+            <div class="w-full flex justify-center">
+              <a (click)="deleteProduct(product.id)" class="cursor-pointer">
+                <span class="material-symbols-outlined"> delete </span>
+              </a>
+              <a routerLink="edit/{{ product.id }}">
+                <span class="material-symbols-outlined"> edit </span>
+              </a>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

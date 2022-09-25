@@ -5,5 +5,6 @@ export class Product {
   ean: number;
   sku: string;
   name: string;
-  ProductImages: ProductImage[];
+  mainImgUrl: string;
+  productImages: ProductImage[];
 }

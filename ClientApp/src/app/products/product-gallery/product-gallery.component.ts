@@ -1,22 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { EventType } from '@angular/router';
-import {
-  BehaviorSubject,
-  fromEvent,
-  merge,
-  Observable,
-  of,
-  tap,
-  zip,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ProductImage } from 'src/app/models/product-image.model';
 import { ProductsService } from 'src/app/services/products.service';
 
