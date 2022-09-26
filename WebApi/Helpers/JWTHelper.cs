@@ -17,6 +17,7 @@ public class JWTHelper
     public JwtSecurityToken GetJwtSecurityToken(AppUser user, IList<string> userRoles)
     {
         var claims = new List<Claim>();
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
         claims.Add(new Claim("name", user.UserName));
         claims.Add(new Claim("mail", user.Email));
         foreach (var role in userRoles)

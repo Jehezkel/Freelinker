@@ -84,7 +84,7 @@ services.AddCors(opt =>
 });
 
 services.AddAutoMapper(typeof(Program));
-
+services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
