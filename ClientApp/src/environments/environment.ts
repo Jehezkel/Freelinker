@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API_BASE_URL: 'http://localhost:5088',
+  ALLEGRO_BASE_URL: 'https://allegro.pl.allegrosandbox.pl',
 };
 
 /*

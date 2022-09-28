@@ -35,7 +35,7 @@ public class IntegrationController : ControllerBase
         var existingToken = this.context.IntegrationTokens.FirstOrDefault(t => t.User == user && t.IntegrationDest == appDest);
         if (existingToken is not null)
         {
-            existingToken.TokenValue = request.TokenvValue;
+            existingToken.TokenValue = request.TokenValue;
             logger.LogInformation("existing token", existingToken.ToString());
         }
         else
@@ -43,7 +43,7 @@ public class IntegrationController : ControllerBase
 
             var result = new IntegrationToken
             {
-                TokenValue = request.TokenvValue,
+                TokenValue = request.TokenValue,
                 IntegrationDest = appDest,
                 User = user
             };
@@ -53,5 +53,17 @@ public class IntegrationController : ControllerBase
 
         this.context.SaveChanges();
         return Ok();
+    }
+    [HttpGet("{AppName}")]
+    public async Task<IActionResult> GetToken(string AppName)
+    {
+        var user = await userManager.GetUserAsync(this.httpContextAccessor.HttpContext.User);
+        var token = context.IntegrationTokens.Where(t => t.User == user && t.IntegrationDest.AppName == AppName).FirstOrDefault();
+        if (token is null)
+            return NotFound();
+        else
+            token.User = null;
+        return Ok(token);
+
     }
 }

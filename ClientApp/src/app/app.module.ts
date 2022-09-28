@@ -17,6 +17,8 @@ import { JWTInterceptor } from './helpers/jwt.interceptor';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { ProductFormGeneralComponent } from './products/product-form-general/product-form-general.component';
 import { UserButtonFormComponent } from './navbar/user-button-form/user-button-form.component';
+import { OffersComponent } from './offers/offers.component';
+import { AllegroInterceptor } from './helpers/allegro.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { UserButtonFormComponent } from './navbar/user-button-form/user-button-f
     ProductFormComponent,
     ProductFormGeneralComponent,
     UserButtonFormComponent,
+    OffersComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,11 @@ import { UserButtonFormComponent } from './navbar/user-button-form/user-button-f
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JWTInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AllegroInterceptor,
       multi: true,
     },
   ],
